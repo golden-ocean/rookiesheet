@@ -1,0 +1,49 @@
+---
+import type {
+  GetStaticPaths,
+  InferGetStaticParamsType,
+  InferGetStaticPropsType,
+} from "astro"
+import DocsLayout from "@/layouts/docs.layout.astro"
+import { getCollection, render, type CollectionEntry } from "astro:content"
+import { isLocale } from "@/i18n"
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("docs")
+
+  return entries.map((entry: CollectionEntry<"docs">) => {
+    const [locale, stack, ...slugParts] = entry.id.split("/")
+    if (import.meta.env.PROD && entry.data.draft) return []
+    if (!isLocale(locale) || !stack || slugParts.length === 0) return []
+
+    return {
+      params: {
+        locale,
+        stack,
+        slug: slugParts.join("/"),
+      },
+      props: { entry },
+    }
+  })
+}) satisfies GetStaticPaths
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
+
+const { entry } = Astro.props as Props
+const { Content } = await render(entry)
+---
+
+<DocsLayout title={entry.data.title} description={entry.data.description}>
+  <article>
+    <header class="mb-8 space-y-3">
+      <h1 class="text-3xl font-bold tracking-tight">{entry.data.title}</h1>
+
+      {entry.data.description && (
+        <p class="text-muted-foreground">{entry.data.description}</p>
+      )}
+    </header>
+
+    <Content />
+  </article>
+</DocsLayout>

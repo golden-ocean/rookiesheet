@@ -1,17 +1,54 @@
 ---
-import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
+import DocsLayout from "@/layouts/docs.layout.astro"
 ---
 
-<Layout>
-  <div class="flex min-h-svh p-6">
-    <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <h1 class="font-medium">Project ready!</h1>
-        <p>You may now add components and start building.</p>
-        <p>We've already added the button component for you.</p>
-        <Button client:load className="mt-2">Button</Button>
+<DocsLayout title="首页 | Knowledge Base" description="个人知识与学习空间">
+  <div class="mx-auto max-w-3xl">
+    <section class="border-b pb-8">
+      <p class="mb-3 text-sm font-medium text-muted-foreground">
+        KNOWLEDGE WORKSPACE
+      </p>
+
+      <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">
+        知识工作空间
+      </h1>
+
+      <p class="mt-4 max-w-2xl leading-7 text-muted-foreground">
+        这里将作为文档与学习内容的统一入口。
+        当前阶段先搭建页面结构，暂不加载具体笔记或题库。
+      </p>
+    </section>
+
+    <section id="documentation" class="py-8">
+      <h2 class="text-xl font-semibold tracking-tight">页面布局预览</h2>
+
+      <p class="mt-2 text-sm leading-6 text-muted-foreground">
+        下面的内容仅用于检查正文宽度、间距和响应式布局。
+      </p>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-xl border bg-card p-5">
+          <h3 class="font-medium">左侧导航</h3>
+          <p class="mt-2 text-sm leading-6 text-muted-foreground">
+            用于未来展示文档分类与导航树。
+          </p>
+        </div>
+
+        <div class="rounded-xl border bg-card p-5">
+          <h3 class="font-medium">右侧目录</h3>
+          <p class="mt-2 text-sm leading-6 text-muted-foreground">
+            用于未来展示当前文档的标题层级。
+          </p>
+        </div>
+
+        <div class="rounded-xl border bg-card p-5 sm:col-span-2">
+          <h3 class="font-medium">中央内容区域</h3>
+          <p class="mt-2 text-sm leading-6 text-muted-foreground">
+            未来承载文档正文、代码示例和学习组件。 目前不读取 Markdown 或 MDX
+            文件。
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
-</Layout>
+</DocsLayout>

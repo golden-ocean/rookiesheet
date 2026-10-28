@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content"
+import DocsSidebarItems from "./docs-sidebar-items.astro"
+
+const locale = Astro.locals.locale
+const currentPath = Astro.url.pathname
+
+const pathParts = currentPath.split("/").filter(Boolean)
+const docsIndex = pathParts.indexOf("docs")
+const stack = docsIndex >= 0 ? pathParts[docsIndex + 1] : undefined
+
+const entries = await getCollection("docsMeta")
+
+const normalizeId = (id: string) =>
+  id.replace(/\.json$/, "").replace(/\/+$/, "")
+
+const metaEntry = entries.find(
+  (entry) => normalizeId(entry.id) === `${locale}/${stack}/_meta`
+)
+
+const navigation = metaEntry?.data
+
+if (stack && !navigation) {
+  console.warn(
+    `[docs-sidebar] Navigation metadata not found for "${locale}/${stack}".`
+  )
+}
+---
+
+<aside aria-label="文档导航" class="hidden w-56 shrink-0 border-r md:block">
+  <div class="sticky top-14 max-h-[calc(100svh-3.5rem)] overflow-y-auto p-4">
+    <p class="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      {navigation?.title ?? "文档导航"}
+    </p>
+
+    {navigation?.items?.length ? (
+      <nav class="text-sm" aria-label="文档目录">
+        <DocsSidebarItems items={navigation.items} currentPath={currentPath} />
+      </nav>
+    ) : (
+      <p class="px-3 py-2 text-sm text-muted-foreground">暂无导航内容</p>
+    )}
+  </div>
+</aside>

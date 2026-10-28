@@ -1,0 +1,26 @@
+{
+  "id": "rust",
+  "type": "group",
+  "title": "Rust",
+  "description": "Learn Rust systematically, from basic syntax to ownership, lifetimes, and concurrency.",
+  "expanded": true,
+  "items": [
+    {
+      "id": "basics",
+      "type": "section",
+      "title": "Getting Started",
+      "description": "Learn the basic concepts and core syntax of Rust.",
+      "expanded": true,
+      "items": [
+        {
+          "id": "variables",
+          "type": "article",
+          "title": "Variables and Mutability",
+          "description": "Learn how variables, mutability, and constants work in Rust.",
+          "href": "/en/docs/rust/variables",
+          "difficulty": 1
+        }
+      ]
+    }
+  ]
+}

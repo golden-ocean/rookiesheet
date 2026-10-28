@@ -1,0 +1,72 @@
+---
+import DocsSidebarItems from "./docs-sidebar-items.astro"
+
+type NavNode = {
+  title: string
+  type?: "group" | "section" | "article"
+  href?: string
+  order?: number
+  expanded?: boolean
+  items?: NavNode[]
+}
+
+interface Props {
+  items: NavNode[]
+  currentPath: string
+}
+
+const { items, currentPath } = Astro.props
+
+const sortedItems = [...items].sort(
+  (a, b) => (a.order ?? 100) - (b.order ?? 100)
+)
+
+const normalizePath = (value: string) =>
+  value.length > 1 ? value.replace(/\/+$/, "") : value
+---
+
+<ul class="space-y-1">
+  {sortedItems.map((item) => {
+    const isArticle = item.type === "article"
+    const isActive =
+      isArticle &&
+      !!item.href &&
+      normalizePath(item.href) === normalizePath(currentPath)
+
+    return (
+      <li>
+        {isArticle && item.href ? (
+          <a
+            href={item.href}
+            aria-current={isActive ? "page" : undefined}
+            class:list={[
+              "block rounded-md px-3 py-2 transition-colors",
+              isActive
+                ? "bg-accent font-medium text-accent-foreground"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+            ]}
+          >
+            {item.title}
+          </a>
+        ) : (
+          <div
+            class:list={[
+              "px-3 py-2 font-semibold",
+              item.type === "group"
+                ? "text-sm text-foreground"
+                : "text-xs text-muted-foreground",
+            ]}
+          >
+            {item.title}
+          </div>
+        )}
+
+        {item.items && item.items.length > 0 && (
+          <div class:list={["pl-3", item.type === "group" ? "mt-1" : ""]}>
+            <DocsSidebarItems items={item.items} currentPath={currentPath} />
+          </div>
+        )}
+      </li>
+    )
+  })}
+</ul>

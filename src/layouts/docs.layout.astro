@@ -1,0 +1,17 @@
+---
+import BaseLayout from "./base.layout.astro"
+import DocsShell from "@/components/docs/docs-shell.astro"
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const { title, description } = Astro.props
+---
+
+<BaseLayout title={title} description={description}>
+  <DocsShell>
+    <slot />
+  </DocsShell>
+</BaseLayout>

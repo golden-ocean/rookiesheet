@@ -1,0 +1,26 @@
+{
+  "id": "rust",
+  "type": "group",
+  "title": "Rust",
+  "description": "从基础语法到所有权、生命周期与并发，系统学习 Rust。",
+  "expanded": true,
+  "items": [
+    {
+      "id": "basics",
+      "type": "section",
+      "title": "入门",
+      "description": "了解 Rust 的基本概念与核心语法。",
+      "expanded": true,
+      "items": [
+        {
+          "id": "variables",
+          "type": "article",
+          "title": "变量与可变性",
+          "description": "学习 Rust 中变量的声明、可变性与常量。",
+          "href": "/zh-cn/docs/rust/variables",
+          "difficulty": 1
+        }
+      ]
+    }
+  ]
+}

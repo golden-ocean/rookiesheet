@@ -1,0 +1,23 @@
+---
+import SiteFooter from "@/components/site/site-footer.astro"
+import SiteHeader from "@/components/site/site-header.astro"
+import "@/styles/global.css"
+
+const { locale, t } = Astro.locals
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{t("footer.copyright")}</title>
+  </head>
+  <body>
+    <div class="flex min-h-svh flex-col">
+      <SiteHeader />
+      <slot />
+      <SiteFooter />
+    </div>
+  </body>
+</html>
